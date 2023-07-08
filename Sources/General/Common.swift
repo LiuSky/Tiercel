@@ -52,6 +52,11 @@ public struct Logger: Logable {
     
     public var option: LogOption
     
+    public init(identifier: String, option: LogOption) {
+        self.identifier = identifier
+        self.option = option
+    }
+    
     public func log(_ type: LogType) {
         guard option == .default else { return }
         var strings = ["************************ TiercelLog ************************"]
