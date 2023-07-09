@@ -191,26 +191,26 @@ extension Cache {
 extension Cache {
     internal func retrieveAllTasks() -> [DownloadTask] {
         return ioQueue.sync {
-            let path = (downloadPath as NSString).appendingPathComponent("\(identifier)_Tasks.plist")
-            if fileManager.fileExists(atPath: path) {
-                do {
-                    let url = URL(fileURLWithPath: path)
-                    let data = try Data(contentsOf: url)
-                    let tasks = try decoder.decode([DownloadTask].self, from: data)
-                    tasks.forEach { (task) in
-                        task.cache = self
-                        if task.status == .waiting  {
-                            task.protectedState.write { $0.status = .suspended }
-                        }
-                    }
-                    return tasks
-                } catch {
-                    manager?.log(.error("retrieve all tasks failed", error: TiercelError.cacheError(reason: .cannotRetrieveAllTasks(path: path, error: error))))
-                    return [DownloadTask]()
-                }
-            } else {
+//            let path = (downloadPath as NSString).appendingPathComponent("\(identifier)_Tasks.plist")
+//            if fileManager.fileExists(atPath: path) {
+//                do {
+//                    let url = URL(fileURLWithPath: path)
+//                    let data = try Data(contentsOf: url)
+//                    let tasks = try decoder.decode([DownloadTask].self, from: data)
+//                    tasks.forEach { (task) in
+//                        task.cache = self
+//                        if task.status == .waiting  {
+//                            task.protectedState.write { $0.status = .suspended }
+//                        }
+//                    }
+//                    return tasks
+//                } catch {
+//                    manager?.log(.error("retrieve all tasks failed", error: TiercelError.cacheError(reason: .cannotRetrieveAllTasks(path: path, error: error))))
+//                    return [DownloadTask]()
+//                }
+//            } else {
                return  [DownloadTask]()
-            }
+//            }
         }
     }
 
